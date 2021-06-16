@@ -38,5 +38,45 @@ React 不仅仅是 js 框架本身，更是一套完整的前端开发生态体�
 
 [**React**](https://zhuanlan.zhihu.com/p/21108312#:~:text=%E7%8B%AD%E4%B9%89%E6%9D%A5%E8%AE%B2React%20%E6%98%AF,ReactRenders%3A%20ReactDOM%20%2F%20ReactServer%20%2F%20ReactCanvas):组件化，符合现代web发展趋势，技术成熟，适合大型web项目，生态系统健全，使用方式简单，性能非常高，支持服务端渲染
 
-**Vue.js**:简单易上手，目前最常用，轻量级的框架，不够成熟
+**Vue.js**:简单易上手，轻量级的框架，不够成熟
+
+
+
+## React 核心概念
+
+### [虚拟DOM](https://juejin.cn/post/6844903870229905422)
+
+**DOM的本质：**document object model，浏览器的概念，用JS对象表示页面上的元素，并提供了操作DOM对象的API
+
+**Virtual DOM**：框架的概念，通过原生`JS`的Object对象模拟DOM中的节点，然后再通过特定的render方法将其渲染成真实的DOM节点
+
+- 虚拟DOM就是一个普通的JavaScript对象，包含了`tag`、`props`、`children`三个属性。
+
+  ```
+  <div id="app">
+    <p class="text">hello world!!!</p>
+  </div>
+  
+  ===================== 》》》》》》》》==========================
+  
+  {
+    tag: 'div',
+    props: {
+      id: 'app'
+    },
+    chidren: [
+      {
+        tag: 'p',
+        props: {
+          className: 'text'
+        },
+        chidren: [
+          'hello world!!!'
+        ]
+      }
+    ]
+  }
+  ```
+
+  
 
