@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "React Learning -- Day 1"
+title: "React Learning "
 date: 2021-06-16
 description: ""
 tag: React
@@ -57,7 +57,7 @@ React 不仅仅是 js 框架本身，更是一套完整的前端开发生态体�
     <p class="text">hello world!!!</p>
   </div>
   
-  ===================== 》》》》》》》》==========================
+  ====== 》》》
   
   {
     tag: 'div',
