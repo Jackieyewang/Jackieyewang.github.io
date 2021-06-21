@@ -149,18 +149,18 @@ body #container h1 {
 
 emotion是一个JavaScript库，使用emotion可以用写js的方式写css代码。在react中安装emotion后，可以很方便进行css的封装，复用。使用emotion后，浏览器渲染出来的标签是会加上一个css开头的标识。
 
-```css
+```
 /** @jsx jsx */
 import { jsx } from '@emotion/react'
 
 render(
   <div
-    css={{
+    css={
       backgroundColor: 'hotpink',
-      '&:hover': {
+       '&:hover': {
         color: 'lightgreen'
       }
-    }}
+    }
   >
     This has a hotpink background.
   </div>
