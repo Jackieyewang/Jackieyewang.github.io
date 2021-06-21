@@ -1,11 +1,6 @@
----
-layout: post
-title: "React Learning "
-date: 2021-06-16
-description: ""
-tag: React
----   
 # React.JS
+
+[toc]
 
 React 起源于Facebook内部项目，由于对市场上JavaScript MVC项目不满意，用于建设Instagram，13年开源
 
@@ -48,16 +43,22 @@ React 不仅仅是 js 框架本身，更是一套完整的前端开发生态体�
 
 **DOM的本质：**document object model，浏览器的概念，用JS对象表示页面上的元素，并提供了操作DOM对象的API
 
-**Virtual DOM**：框架的概念，通过原生`JS`的Object对象模拟DOM中的节点，然后再通过特定的render方法将其渲染成真实的DOM节点
+**Virtual DOM**：框架的概念，通过原生`JS`的Object对象模拟DOM中的节点，然后再通过特定的render方法将其渲染成真实的DOM节点 --- 使用`JavaScript`对象来表示`DOM`树的信息和结构
 
-- 虚拟DOM就是一个普通的JavaScript对象，包含了`tag`、`props`、`children`三个属性。
+#### 虚拟DOM本质
+
+- `Vue`中的虚拟`DOM`是使用`template`完成，过`vue-loader`对其进行编译处理最后形成虚拟`DOM`
+
+- `React`使用的是`JSX`对进行编译，最后产生虚拟DOM
+
+- 虚拟DOM就是一个普通的JavaScript对象，包含了`tag`、`props`、`children`三个属性（标签名，各种属性，孩子节点）。
 
   ```
   <div id="app">
     <p class="text">hello world!!!</p>
   </div>
   
-  ====== 》》》
+  ====== 》》》》
   
   {
     tag: 'div',
@@ -78,5 +79,51 @@ React 不仅仅是 js 框架本身，更是一套完整的前端开发生态体�
   }
   ```
 
-  
+  - createElement方法创建虚拟DOM
+
+    createElement 接受`type`, `props`,`children`三个参数创建一个虚拟标签元素DOM的方法。
+
+    ```
+    function createElement(type, props, children) {
+        return new Element(type, props, children);
+    }
+    ```
+
+  - render方法将虚拟DOM转化成真实DOM
+
+    ```
+    function render(eleObj) {
+        let el = document.createElement(eleObj.type); // 创建元素
+        for(let key in eleObj.props) {
+            // 设置属性的方法
+            setAttr(el, key, eleObj.props[key])
+        }
+        eleObj.children.forEach(child => {
+            // 判断子元素是否是Element类型，是则递归，不是则创建文本节点
+            child = (child instanceof Element) ? render(child) : document.createTextNode(child);
+            el.appendChild(child);
+        });
+        return el;
+    }
+    ```
+
+网页呈现过程：
+
+ 	1. 浏览器请求服务器获取页面HTML代码
+ 	2. 浏览器在内存中解析DOM结构，并在内存中渲染DOM树
+ 	3. 将DOM树呈现在页面上
+
+#### [Diff算法](https://blog.csdn.net/qq_39414417/article/details/104763824)
+
+ 	1.用JavaScript模拟DOM树，并渲染这个DOM树。
+     2.比较新老DOM树，得到比较的差异对象。
+     3.把差异对象应用到渲染的DOM树。
+
+**diff过程整体策略：深度优先，同层比较**
+
+![20200310082333622](https://img-blog.csdnimg.cn/20200310082333622.png)
+
+
+
+## 创建webpack项目
 

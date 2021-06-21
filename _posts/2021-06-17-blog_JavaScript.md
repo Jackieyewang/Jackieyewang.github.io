@@ -1,7 +1,1050 @@
 ---
 layout: post
-title: "First blog"
+title: "Go 预言学习"
 date: 2021-06-17
-description: "First blog"
-tag: none
+description: ""
+tag: Go
 ---   
+
+一.  安装
+
+https://blog.csdn.net/tao_627/article/details/78758913
+
+出问题自己百度。
+
+Go 语言被设计成一门应用于搭载 Web 服务器，存储集群或类似用途的巨型中央服务器的系统编程语言。对于高性能分布式系统领域而言，Go 语言比大多数其它语言有着更高的开发效率。
+
+二.  编辑器
+
+VScode 商店里面有go
+
+Vim
+
+Order LiteIDE
+
+https://github.com/visualfc/liteide/blob/master/liteidex/deploy/welcome/zh_CN/install.md
+
+ 
+
+三.  第一个程序
+
+package main  //每个Go源代码文件的开头都是一个
+
+              //package声明，表示该Go代码所属的包
+
+ 
+
+import"fmt"    //import语句，用于导入该程序所依赖的包，include
+
+ 
+
+funcmain() {              //func 函数名(参数列表)(返回值列表) {
+
+                         /*"{"不能单独放在一行*/
+
+    /*出息小栈*/         //注释是一样的
+
+    fmt.Println("Hello,World!")           // 函数体   
+
+    //标识符（包括常量、变量、类型、函数名、结构字段等等）以一个大写字母开头j就是可以被引用的标识符或者是已导出的
+
+}                         //}
+
+ 
+
+ 
+
+$ go run hello.go
+
+Hello,World!
+
+ 
+
+$go build hello.go
+
+$./hello
+
+ 
+
+包是Go语言里最基本的分发单位,理解为 module吧。
+
+main()函数不能带参数，也不能定义返回值
+
+go 一个函数可返回多个值。fmt.Println可以同时返回不同类型的值。其他package详细用法看 https:\\go-zh.org\pkg\
+
+ 
+
+如果你能硬着头皮先把这个参考手册看完，再看我下面的胡说八道，你可能才不会骂我乱七八糟。
+
+https://golang.org/ref/spec#Calls
+
+ 
+
+四.  基础语法
+
+Tip：Go语言内分隔可以加分号，也可以不加。编译器会在换行时自动加分号。如果想写在一行就要自己加分号（最好不要写在一行）。
+
+标识符和其他语言规定一样。
+
+下面列举了 Go 代码中会使用到的 25 个关键字或保留字：
+
+break
+
+default
+
+func
+
+interface
+
+select
+
+case
+
+defer
+
+go
+
+map
+
+struct
+
+chan
+
+else
+
+goto
+
+package
+
+switch
+
+const
+
+fallthrough
+
+if
+
+range
+
+type
+
+continue
+
+for
+
+import
+
+return
+
+var
+
+Go 语言还有 36 个预定义标识符：
+
+append
+
+bool
+
+byte
+
+cap
+
+close
+
+complex
+
+complex64
+
+complex128
+
+
+uint16
+
+copy
+
+false
+
+float32
+
+float64
+
+imag
+
+int
+
+int8
+
+int16
+
+
+uint32
+
+int32
+
+int64
+
+iota
+
+len
+
+make
+
+new
+
+nil
+
+panic
+
+
+uint64
+
+print
+
+println
+
+real
+
+recover
+
+string
+
+true
+
+uint
+
+uint8
+
+
+uintptr
+
+ 
+
+import (
+
+"fmt"
+
+"math/rand"
+
+)
+
+import在引用外包时，可以用小括号同时调用。
+
+五.  申明变量
+
+1.    主要类型：
+
+int (
+
+int  int8 int16  int32  int64
+
+uint uint8uint16 uint32 uint64 uintptr
+
+）
+
+float32,float64,complex…等数字类型
+
+bool
+
+string
+
+数组 []+类型名（[]int）
+
+slice 切片（指向数组的指针 array之上 list之下）
+
+struct 结构体
+
+func 函数类型，整个函数可以赋值
+
+interface接口，指出了一个接口的方法集合，任何实现该方法集合的类型都实现了这个接口，并且可以赋值给该接口类型的变量，go没有类，接口可以理解为go的类
+
+map 键值对，字典
+
+channel 信道，用chan定义，用于goroutine，go的并发编程，协程（并列于线程，进程）。
+
+pointer 指针，*+type
+
+ 
+
+ 
+
+类型差不多就这些，然后我们来看看怎么申明（和常规语言不一样），之后仔细讲其中一些比较奇怪的类型。
+
+ 
+
+2.如何申明
+
+varvariablename type        //var申明变量的标志，先说变量名再说变量类型 
+
+Order（或者）
+
+varvariablename type = expression
+
+var  variablename = expressiongo 编译器会根据后面的表达式自动判断数据类型
+
+甚至可以  variablename := expression  
+
+:= go 编译器会根据后面的表达式自动判断数据类型
+
+ 
+
+package main
+var a ="出息小栈"
+var b string="出息小栈"
+var c bool  //go会自动对每一个类型变量自动初始化
+var d := 32;
+func main(){
+    println(a, b, c , d)
+}
+ 
+//类型相同多个变量同时申明也是支持的
+
+var vname1, vname2, vname3 type
+
+vname1, vname2, vname3 = v1, v2, v3
+
+ 
+
+var(     //这样同时申明多个不同类型的变量
+
+    a int
+
+    b bool
+
+)
+
+ 
+
+ 
+
+3. 类型提要
+
+3.1数组
+
+数组是一个固定长度的类型的集合，长度必须规定，元素类型必须一样并且由数组的类型决定。
+
+[32]byte
+
+[1000]*float64     
+
+[2][3]int     //2*3 顺序和其他语言一样
+
+[2][2][2]float64
+
+ 
+
+3.2切片slice
+
+定义一个新的slice用语句
+
+      variablename := []type //不同于array的地方是这里没有定义大小
+
+      var variablename = []type
+
+创建切片
+
+  variablename= make ([]type , length , capacity)
+
+ 
+
+slice的属性和操作类似于Python的array，length长度是已经赋值的最大下标+1，capacity容量是slice的最多可容纳的元素个数，当length = capacity时，capacity以2*length大小扩容。length 由len()得到，capacity由cap()得到。
+
+var sli  = make([]byte, 0, 100)
+
+sli = append(sli, 10)
+
+sli[1:4] 是指第2个到第4个元素，下标1-3，Python里面对array的操作都可以类似
+
+tip：nil 零值切片 [], len = 0 , cap = 0
+
+切片也可以是多维的。
+
+  var numbers []int
+
+  numbers = append(numbers,0)  //追加元素
+
+numbers = append(numbers,2,3,4)
+
+copy(numbers1,numbers) //拷贝 numbers 的内容到 numbers1 
+ 
+
+3.3接口 interface
+
+接口类型是由一组方法签名定义的集合。
+
+/* 定义接口 */
+
+typeinterface_name interface{
+
+   method_name1 [return_type]
+
+   method_name2 [return_type]
+
+   method_name3 [return_type]
+
+   ...
+
+   method_namen [return_type]
+
+}
+
+ 
+
+/* 定义结构体 */
+
+typestruct_name struct{
+
+   /* variables */
+
+}
+
+ 
+
+/* 实现接口方法 */
+
+func (struct_name_variable struct_name)method_name1()[return_type]{
+
+   /* 方法实现 */
+
+}
+
+...
+
+func (struct_name_variable struct_name)method_namen()[return_type]{
+
+   /* 方法实现*/
+
+}
+
+这里先说明type createname type 是申明一个类型的语句，之后可以直接
+
+var variablename createname 来申明变量
+
+package main
+
+import"fmt"
+
+typeIinterface {
+
+    M()
+
+}
+
+typeTstruct {
+
+    S string
+
+}
+
+ 
+
+func (t T) M() {
+
+    fmt.Println(t.S)
+
+}
+
+funcmain() {
+
+    vari I = T{"hello"}     //var i I 申明一个接口类型I，给它赋值一个结构//体{"hello"}
+
+    i.M()                    //然后调用M()方法
+
+}
+
+ 
+
+ 
+
+ 
+
+3.4 Map 集合（字典）
+
+Map 是无序的的键值对集合，我们无法决定它的返回顺序，这是因为 Map 是使用 hash 表来实现的。Go官方翻译成映射。
+
+/* 声明变量，默认 map 是 nil */
+
+var map_variable map[key_data_type]value_data_type
+
+ 
+
+/* 使用 make 函数创建map */
+
+map_variable:= make(map[key_data_type]value_data_type)
+
+ 
+
+3.5 channel 信道
+
+信道是带有类型的管道，可以通过它用信道操作符 <- 来发送或者接收值。
+
+ch := make(chan int) //创建信道
+
+ch <- v    // 将 v 发送至信道 ch
+
+v := <-ch  // 从 ch 接收值并赋予 v
+
+<-ch 是合法的， 可以单独调用获取通道的（下一个）值，当前值会被丢弃
+
+例子理解信道：
+
+ 
+
+package main
+
+ 
+
+import"fmt"
+
+ 
+
+funcsum(s []int, c chanint) {
+
+    sum := 0
+
+    for_, v := range s {
+
+        sum += v
+
+    }
+
+    c <- sum // 将和送入 c
+
+}
+
+ 
+
+funcmain() {
+
+    s := []int{7, 2, 8, -9, 4, 0}
+
+ 
+
+    c := make(chanint)        //构建信道 c
+
+    gosum(s[:len(s)/2], c)     //
+
+    gosum(s[len(s)/2:], c)     //将任务分配给两个 Go 程
+
+    x, y := <-c, <-c // 从 c 中接收
+
+ 
+
+    fmt.Println(x, y, x+y)
+
+}
+
+ 
+
+ 
+
+之后说明goroutine和并发编程。
+
+TIPs：
+
+这里我没有特别说明的一般就和传统语言是一样的用法，如果不一样（特殊情况），请百度或Google，然后希望能告诉我。
+
+类型转换在go内也是支持的，类似于传统语言，const 用于申明常量，
+
+ 
+
+ 
+
+六.  函数
+
+1.  Go的函数定义格式
+
+func function_name( [parameter list] ) [return_types] {
+
+   expression
+
+}
+
+Go可以没有参数也可以接受多个参数，可以返回多个返回值，定义参数列表时，如果类型相同，允许和申明变量一样在相同类型的变量后面才添加类型 a , b type，
+
+func add(x, y int)
+func add(x int, y int)二者是等价的
+
+ 
+
+3.    Go 的返回值可被命名，它们会被视作定义在函数顶部的变量。
+
+例如
+
+func swap(a, b string) ( string, string) {
+
+   x= b
+
+   y= a
+
+       returnx , y
+
+}
+
+与
+
+func swap(a, b string) (x string,y string){
+
+   x= b
+
+   y= a
+
+       return
+
+}
+
+二者是等效的
+
+ 
+
+4.      Go 语言可以很灵活的创建函数，并作为值使用。这里func 被认为作为类型
+
+例如
+
+getSquareRoot := func(x float64) float64 {
+      return math.Sqrt(x)
+   }
+变量名getSquareRoot 被声明为一个函数类型，类型包括参数和返回值，这样构建函数的过程可以类比构建映射map的过程
+
+ M :=make(map[key_data_type]value_data_type)
+
+ 
+
+默认情况下，Go 语言使用的是值传递，即在调用过程中不会影响到实际参数。Go语言的函数调用参数全部是传值的, 包括 slice/map/chan 在内所有类型, 都是传值的。
+
+func swap(x, y int)int{
+
+   var temp int
+
+ 
+
+   temp = x /* 保存 x 的值 */
+
+   x = y    /* 将 y 值赋给 x */
+
+   y = temp /* 将 temp 值赋给 y*/
+
+ 
+
+   return temp;
+
+}
+
+ 
+
+例如，这个函数就起不到交换x,y值的作用。
+
+值传递直接理解为
+
+函数内部不会对传入的数值参数产生影响。
+
+Slice等其他具有指针性质的类型也是值传递，例如：
+
+funcmain() {
+
+    a := []int{1,2,3}
+
+    fmt.Println(a)
+
+    modifySlice(a)
+
+    fmt.Println(a)
+
+}
+
+ 
+
+funcmodifySlice(data []int) {
+
+    data = nil
+
+}
+
+ 
+
+这里是不会对slice 做改变的。
+
+ 
+
+Go 语言函数引用传递值
+
+即直接通过指针：
+
+直接看代码
+
+func swap(x *int, y *int){
+
+   var temp int
+
+   temp =*x    /* 保持 x 地址上的值 */
+
+   *x =*y      /* 将 y 值赋给 x */
+
+   *y = temp    /* 将 temp 值赋给 y */
+
+}
+
+ 
+
+在函数内调用 swap( & a , & b ),就可以起到交换 a, b 值的作用。
+
+ 
+
+理解引用调用时Go语言学习的难题，许多国内的书籍和学习网站也都没搞清楚，所以我也不一定搞清楚了。我只能给的建议是，值传递就是函数内部不会对传入的数值参数产生影响的意思，而引用传递直接修改了地址上的值而起到作用。如果你马上想到slice是一种指针类数组，我还没理解，或许可以理解为，不能修改偏移地址IP吧，只能修改寄存器地址。
+
+ 
+
+ 
+
+ 
+
+ 
+
+七.  语句
+
+1.     for
+
+1.1 基本的 for 循环由三部分组成，它们用分号隔开：
+
+·       初始化语句：在第一次迭代前执行
+
+·       条件表达式：在每次迭代前求值
+
+·       后置语句：在每次迭代的结尾执行
+
+和传统语言是一样的，但是for 语句没有小括号
+
+ fori := 0; i < 10; i++ {
+
+    sum += i
+
+}
+
+1.2 初始化语句和后置语句是可选的。
+
+for ; sum< 1000; {
+
+         sum += sum
+
+  }
+
+ 
+
+ 
+
+3  while ！！ Go 语言内没有while，去掉for的分号后，for 变成 while
+
+例如 修改上面的程序
+
+for sum< 1000 {
+
+          sum += sum
+
+   }
+
+ 
+
+2.     if
+
+ 
+
+1  if 也是和传统语言格式相同，同样没有小括号。
+
+ 
+
+特别的：
+
+2  *同 for 一样， if 语句可以在条件表达式前执行一个简单的语句。该语句声明的变量作用域仅在 if 之内。
+
+ifv := math.Pow(x, 2); v < 10 {
+
+    return v
+
+}
+
+当 x 是输入值，将 x的2次方赋值给v ，v<10时，返回v 即x的2次方。
+
+ 
+
+3  else 在go中同样适用。
+
+ 
+
+ 
+
+3.     switch
+
+ 
+
+   switch marks {
+
+      case90: grade ="A"
+
+      case80: grade ="B"
+
+      case50,60,70: grade ="C"
+
+      default: grade ="D" 
+
+   }
+
+ 
+
+先看代码。switch和传统语言的区别在于，switch后和同if 一样可以使用语句，特别的，Go 自动提供了在这些语言中每个 case 后面所需的 break 语句， 另一点重要的不同在于 switch 的 case 无需为常量，且取值不必为整数。
+
+ 
+
+我对switch有一个地方不理解，如果你能帮我解答的话：
+
+switchexpression；variablename  differ from switch expression
+
+ 
+
+funcmain() {
+
+    fmt.Print("Go runs on ")                
+
+    switchos := runtime.GOOS; os { //switch expression；variablename
+
+    case"darwin":
+
+        fmt.Println("OS X.")
+
+    case"linux":
+
+        fmt.Println("Linux.")
+
+    default:
+
+        fmt.Printf("%s.", os)
+
+    }
+
+}
+
+ 
+
+/*&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
+
+funcmain() {
+
+    varxinterface{}
+
+      switchi := x.(type) { //switch expression
+
+       casenil:     
+
+          fmt.Printf(" x 的类型 :%T",i)               
+
+       caseint:     
+
+          fmt.Printf("x 是 int 型")                      
+
+       casefloat64:
+
+          fmt.Printf("x 是 float64 型")          
+
+       casefunc(int) float64:
+
+          fmt.Printf("x 是 func(int) 型")                     
+
+       casebool, string:
+
+          fmt.Printf("x 是 bool 或 string 型" )      
+
+       default:
+
+          fmt.Printf("未知型")    
+
+    }  
+
+ }
+
+这两段代码都是正确的，但是对任意一段代码修改格式switch expression；variablenameßà switch expression,都会报错。
+
+ 
+
+switch后甚至可以没有expression和 variablename，判断直接在case内进行，
+
+ 
+
+4.     其他
+
+1   defer
+
+  正常求值，推迟调用。推迟调用的函数其参数会立即求值，但直到外层函数返回前该函数都不会被调用。推迟的函数调用会被压入一个栈中。当外层函数返回时，被推迟的函数会按照后进先出的顺序调用。
+
+ 
+
+funcmain() {
+
+  defer fmt.Println("world")
+
+fmt.Println("hello")
+
+}
+
+输出 hello world
+
+ 
+
+2
+
+控制语句
+
+描述
+
+break 语句
+
+经常用于中断当前 for 循环或跳出 switch 语句
+
+continue 语句
+
+跳过当前循环的剩余语句，然后继续进行下一轮循环。
+
+goto 语句
+
+将控制转移到被标记的语句。
+
+ 
+
+3  Select
+
+select是Go中的一个控制结构，类似于用于通信的switch语句。每个case必须是一个通信操作，要么是发送要么是接收。select随机执行一个可运行的case。如果没有case可运行，它将阻塞，直到有case可运行。一个默认的子句应该总是可运行的。
+
+ 
+
+·       每个case都必须是一个通信
+
+·       所有channel表达式都会被求值
+
+·       所有被发送的表达式都会被求值
+
+·       如果任意某个通信可以进行，它就执行；其他被忽略。
+
+·       如果有多个case都可以运行，Select会随机公平地选出一个执行。其他不会执行。 
+否则：
+
+1.     如果有default子句，则执行该语句。
+
+2.     如果没有default字句，select将阻塞，直到某个通信可以运行；Go不会重新对channel或值进行求值。
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+八.  并发
+
+进程，线程，协程
+
+进程是一个程序在一个数据集中的一次动态执行过程：正在进行的程序。CPU资源分配和调度的独立单位。each processhas an address space and a single thread of control in the troditionaloperating systems 摘自现代操作系统，然后现在一般一个进程有多个线程（thread）。局限：创建、撤销和切换的开销比较大。
+
+ 
+
+线程，轻量级进程。CPU分配和调度的基本单位，不同的控制线程共享同一个地址空间。每个线程都有一个固定大小的内存块（一般2MB）作为栈。
+
+ 
+
+协程，用户态的轻量级线程。一个不固定大小的内存块（一般只需2KB左右），而且是动态的，栈的大小根据需要动态伸缩。在多个线程上调度多个协程。协程是独立执行的，他们之间没有通信。他们必须通信才会变得更有用：彼此之间发送和接收信息并且协调/同步他们的工作。
+
+ 
+
+Goroutine是一种协程，在go语言中使用go+ 函数名来调用go程，运行时可以修改GOMAXPROCS来操控调用的线程数。一个go程可以有多个入口和出口。
+
+Go语言使用信道完成协程间的通信，发送类型化的数据在协程之间通信，保证协程的同步性，数据通过信道，同一时间只有一个协程能访问数据。
+
+package main
+
+ 
+
+import"fmt"
+
+ 
+
+funcsum(s []int, c chanint) {
+
+    sum := 0
+
+    for_, v := range s {
+
+        sum += v
+
+    }
+
+    c <- sum // 将和送入 c
+
+}
+
+ 
+
+funcmain() {
+
+    s := []int{7, 2, 8, -9, 4, 0}
+
+ 
+
+    c := make(chanint)        //构建信道 c
+
+    gosum(s[:len(s)/2], c)     //
+
+    gosum(s[len(s)/2:], c)     //将任务分配给两个 Go 程
+
+    x, y := <-c, <-c // 从 c 中接收
+
+ 
+
+    fmt.Println(x, y, x+y)
+
+}
+
+ 
+
+ 
+
+ 
+
+并发编程
+
+并发编程：将相互独立的执行过程综合到一起的编程技术。(这里是指通常意义上的执行过程，而不是Linux进程。很难定义。)
+
+并行程序：同时执行(通常是相关的)计算任务的编程技术。
+
+ 
+
+并发 vs. 并行
+
+并发是指同时处理很多事情。而并行是指同时能完成很多事情。两者不同，但相关。一个重点是组合，一个重点是执行。并发提供了一种方式让我们能够设计一种方案将问题(非必须的)并行的解决。
+
+https://existentialtype.wordpress.com/2011/03/17/parallelism-is-not-concurrency/
+
+The situation has gotten so bad that I thinkthat most computer scientists cannot distinguish the two concepts.  (Ormaybe they willfully confuse the two so as to justify funding for work onconcurrency by appealing to the importance of parallelism.)
+
+一个著名教授说的，我现在也还不理解并发和并行，要是想真正理解就看完上面的文章吧，然后你就比一般的计算机教授牛逼了。需要用到go程编程的话，我们只需要理解，go语言是并发编程，go程是协程的一种，用于管理多个不一定相关的程序或者操作，go程之间用信道通信，同一个信道内管理多个go程，信道是一种特殊的类型，动态的时间相关性的类型。
+
+我这里承认还没足够了解信道，上面的程序输出x和y随ch的先后和go程建立的先后是相反的，而实际上我读到的许多程序都是相同的，--玄学。
+
+ 
+
+Select与阻塞
+
+具体语句看上文的语句部分。Select在同一信道中对go程有选择先后的功能，在一个go程执行时，阻塞其他go程的进行。
+
+九.  其他
+
+太多了。这里给其他的参考。
+
+https://golang.org/pkg/
+
+http://wiki.jikexueyuan.com/project/the-way-to-go/
+
+https://legacy.gitbook.com/download/pdf/book/yar999/gopl-zh
+
+https://golang.org/ref/spec#Calls
