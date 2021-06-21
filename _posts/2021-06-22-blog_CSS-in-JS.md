@@ -30,6 +30,7 @@ import styled from '@emotion/styled'
 export const Button = styled.button`
   font-size: 16px;
 `
+两个文件的两个同名元素的CSS不会互相影响
 ```
 
 ### 2. 缺乏作用域
@@ -40,7 +41,7 @@ export const Button = styled.button`
 
 ```jsx
 const css = styleBlock => {
-  const className = someHash(styleBlock);
+  const className = Hash(styleBlock);
   const styleEl = document.createElement('style');
   styleEl.textContent = `
     .${className} {
@@ -68,13 +69,16 @@ const className = css(`
 body #container h1 {
   color: green
 }
+```
+
+```html
 <!doctype html>
 <html lang="en">
 <body>
   <div id='container'>
    <div class='target'>
      <div class='name'>
-       <h1>我是啥颜色？</h1>
+       <h1>颜色？</h1>
      </div>
    </div>
   </div>
@@ -82,7 +86,9 @@ body #container h1 {
 </html>
 ```
 
-那么这个h1元素最终显式为什么颜色？加入你想要追踪这个影响这个h1的样式，怎么追踪？
+
+
+比较麻烦判断h1元素最终显式为什么颜色，DOM树越复杂越难追踪
 
 而CSS-in-JS的方案就简单直接、易于追踪
 
@@ -102,7 +108,7 @@ export const Title = styled.h1`
 ```css
 const Container = styled.div(props => ({
   display: 'flex',
-  flexDirection: props.column && 'column'
+  flexDirection: props.column && 'column'//加入条件判断或变量计算
 }))
 ```
 
@@ -116,6 +122,9 @@ const Container = styled.div(props => ({
 body #container h1 {
   color: green
 }
+```
+
+```html
 <!doctype html>
 <html lang="en">
 <body>
@@ -130,7 +139,7 @@ body #container h1 {
 </html>
 ```
 
-如果你想把 `h1` 改成`h2`，必须要同时改动 CSS 和 HTML。而在CSS-in-JS中，HTML和CSS是结合在一起的，易于修改
+如果想把 `h1` 改成`h2`，必须要同时改动 CSS 和 HTML。而在CSS-in-JS中，HTML和CSS是结合在一起的，易于修改
 
 ## Emotion 介绍
 
