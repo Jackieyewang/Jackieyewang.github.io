@@ -64,7 +64,7 @@ Nervos的状态生成和验证是分开的，可以通过不同的算法进行�
 * **链下** 在客户端根据输入生成新状态，打包广播到网络。
 * **链上** CKB节点运行相同的算法，提供与先前客户端相同的状态和用户输入，验证结果与链下输出是否匹配
 
-![Figure1](image/layered-architecture.png)
+![Figure1](/images/posts/layered-architecture.png)
 
 ```
 client,service和侧链不对应？？？？    axon muta提供基础设施
@@ -74,15 +74,11 @@ client,service和侧链不对应？？？？    axon muta提供基础设施
 
 
 
-
-
-
-
 <center>图 1. 分层架构的状态生成和验证分离</center>
 <center>Common knowledge layer 第一层（下层）用于状态验证和储存，generation layer第二层（链下）生成状态，并将生成的状态发送给layer1，状态生成方法如下一节，对应图中从左到右</center>
 
 状态生成和验证分离的优势在于状态生成转到链下进行，实现链下扩容，状态生成和验证并行化。
-![Figure2](image/separation-of-generation-verification.png)
+![Figure2](/images/posts/separation-of-generation-verification.png)
 
 
 
@@ -108,7 +104,7 @@ client,service和侧链不对应？？？？    axon muta提供基础设施
 ### cell模型
 
 cell模型是一个更泛化的比特币的 UTXO 模型，和 UTXO 只能存数字不同，Cell 可以存任意类型的数据，是一个有状态的编程模型。
-![Figure3](image/cell.png)
+![Figure3](/images/posts/cell.png)
 
 cell是CKB中的基本状态单位，用户可以在其中包含任意状态。单元格具有以下字段：
 
@@ -143,7 +139,7 @@ cell是不可变的，一旦创建不可修改，每个cell只能使用一次。
 
 #### 交易模型
 
-![](image/640.jpeg) 
+![](/images/posts/640.jpeg) 
 
 * CKB 的交易模型是 UTXO 结构，基本结构单位是cell，每一笔交易会销毁一部分 Cells，生成一部分新的 Cells。
 
@@ -779,7 +775,7 @@ CKB节点分为三种类型：
 
    Alice 在连接块头时，保持 Best Header Chain Tip 的更新
 
-![image-20200212191955710](./image/image-20200212191955710.png)
+![image-20200212191955710](/images/posts/image-20200212191955710.png)
 
 第一步中Alice将自己 Best Header Chain 中的块进行采样，将选中块的哈希作为消息内容发给 Bob。采样模式基本原则是最近的块采样越密，越早的块越稀疏。类似如下深绿色块为locator定位块，采样块的哈希列表被发送给bob
 
@@ -789,7 +785,7 @@ CKB节点分为三种类型：
 
 
 
-![image-20200212193439724](./image/image-20200212193439724.png)
+![image-20200212193439724](/images/posts/image-20200212193439724.png)
 
 第二步，Bob 根据 Locator 和自己的 Best Chain 可以找出两条链的最后一个共同块。因为创世块相同，所以一定存在这样一个块。Bob 把共同块之后一个开始到 Best Chain Tip 为止的所有块头发给 Alice。
 
@@ -817,7 +813,7 @@ Alice在收到块头消息时可以先做以下格式验证：
 
 这一步的验证包括检查块头是否满足共识规则，PoW 是否有效。因为不处理 Orphan Block，难度调整也可以在这里进行验证。
 
-![connect-header-status](./image/connect-header-status.jpg)
+![connect-header-status](/images/posts/connect-header-status.jpg)
 
 如果认为 Unknown 状态块是不在状态树上的话，在连接块头阶段，会在状态树的末端新增一些 Connected 或者 Invalid 状态的节点。所以可以把连接块头看作是拓展状态树，是探路的阶段。
 
@@ -841,7 +837,7 @@ Alice在收到块头消息时可以先做以下格式验证：
 
 假设分支第一个要下载的 Connected 状态块号是 M，滑动窗口长度是 N，那么只去下载 M 到 M + N - 1 这 N 个块。在块 M 下载并验证后，窗口往右移动到下一个 Connected 状态的块。如果块 M 验证失败，则分支剩余的块也就都是 Invalid 状态，不需要继续下载。如果窗口长时间没有向右移动，则可以判定为下载超时，可以在尝试其它分支之后再进行尝试，或者该分支上有新增的 Connected 块时再尝试。
 
-![image-20200212200921810](./image/image-20200212200921810.png)
+![image-20200212200921810](/images/posts/image-20200212200921810.png)
 
 下载块会把状态树中工作量更高的 Connected Chain 中的 Connected 块变成 Downloaded 或者 Invalid。
 
@@ -959,7 +955,7 @@ CKB共识协议是中本聪共识的一种变体。
 
 ### 两步交易确认
 
-![figure3](image/2step.jpg)
+![figure3](/images/posts/2step.jpg)
 
 
 
@@ -975,7 +971,7 @@ NC-Max 将交易的确认与交易的同步解耦。在致密区块中既包含�
 
 
 
-![NC-max](./image/NC-max.jpeg)
+![NC-max](/images/posts/NC-max.jpeg)
 
 在 Compact Block 中，并不会将整个交易（比特币每个交易大约 250Bytes）广播出去，而是广播 Compact Block 中的交易 ID。这些交易 ID 组成了 Compact Block，这些 Compact Block 比实际的区块小很多，因此速度会快很多。
 
@@ -1061,7 +1057,7 @@ sha256的漏洞，举例，为什么要新建一个pow挖矿算法
 
 #### 海绵函数
 
-![sponge](./image/sponge.png)
+![sponge](/images/posts/sponge.png)
 
 
 
