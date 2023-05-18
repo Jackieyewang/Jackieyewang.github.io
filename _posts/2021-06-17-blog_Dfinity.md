@@ -3,7 +3,7 @@ layout: post
 title: "Dfinity"
 date: 2021-06-17
 description: "First blog"
-tag: Dfinity
+tag: 区块链
 ---   
 官网 https://dfinity.org/ 1
 开发者文档：https://sdk.dfinity.org/ 7

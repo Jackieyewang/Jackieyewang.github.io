@@ -8,7 +8,7 @@ date: 2021-07-01
 
 description: "在本地搭建一个ethereum的私有节点(2)"
 
-tag: ETH
+tag: 区块链
 
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: "Rebase--Nervos 金色传说"
 date: 2021-06-07
 description: "Rebase--Nervos 金色传说 总结"
-tag: none
+tag: 区块链
 ---   
 
 # Rebase--Nervos 金色传说

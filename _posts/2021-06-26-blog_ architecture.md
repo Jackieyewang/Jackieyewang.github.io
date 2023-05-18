@@ -3,7 +3,7 @@ layout: post
 title: "计算机系统的硬件结构"
 date: 2021-06-26
 description: ""
-tag: computer
+tag: 计算机基础
 ---   
 # 计算机系统的硬件结构
 

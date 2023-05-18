@@ -3,7 +3,7 @@ layout: post
 title: "在本地搭建一个ethereum的私有节点(1)"
 date: 2021-06-12
 description: "在本地搭建一个ethereum的私有节点(1)"
-tag: ETH
+tag: 区块链
 ---   
 
 在本地搭建一个ethereum的私有节点(1)
