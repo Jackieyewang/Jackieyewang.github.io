@@ -1,7 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    bundler (2.4.13)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
     colorator (1.1.0)
